@@ -8,7 +8,7 @@ public class Covid19TrackingManager {
 	
 	public static void main(String[] args) {
 		if (args.length != 1) {
-			throw new IllegalArgumentException("Input should only contain filename");
+			throw new IllegalArgumentException("Input should only contain file name");
 		}
 		try {
 			input = args[0];
