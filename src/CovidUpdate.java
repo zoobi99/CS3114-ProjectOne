@@ -14,6 +14,7 @@ public class CovidUpdate {
 	private int recovered;
 	private int gradeScore;
 	private int deaths;
+	private int index;
 	
 	/**
 	 * Stores one row of data, param tags need to be fixed
@@ -31,7 +32,7 @@ public class CovidUpdate {
 	 */
 	public CovidUpdate(int date, String state, int positive, int negative, 
 			int hospitalized, int currVent, int cumVent, int recovered, 
-			String grade, int deaths) {
+			String grade, int deaths, int index) {
 		this.date = date;
 		this.checkState(state);
 		this.positiveCases = positive;
@@ -153,5 +154,9 @@ public class CovidUpdate {
 	
 	public int getYear() {
 		return this.year;
+	}
+	
+	public int getIndex() {
+		return this.index;
 	}
 }
