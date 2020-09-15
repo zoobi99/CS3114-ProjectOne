@@ -34,7 +34,7 @@ public class CovidUpdate {
 			int hospitalized, int currVent, int cumVent, int recovered, 
 			String grade, int deaths, int index) {
 		this.date = date;
-		this.checkState(state);
+		this.checkState(state, true);
 		this.positiveCases = positive;
 		this.negativeCases = negative;
 		this.hospitalized = hospitalized;
@@ -96,12 +96,16 @@ public class CovidUpdate {
 		}
 	}
 	
-	private void checkState(String stateName) {
+	public boolean checkState(String stateName, boolean isConstructor) {
 		try {
 			this.state = State.valueOf(stateName);
+			return true;
 		}
 		catch (Exception e) {
-			System.out.println(stateName +  " is not a recognized state abreviation");
+			if (isConstructor) {
+				System.out.println(stateName +  " is not a recognized state abreviation");
+			}
+			return false;
 		}
 	}
 	public int getDataQualityScore() {

@@ -15,6 +15,7 @@ public class CovidUpdateTest extends TestCase {
 		assertEquals(update1.getDay(), 18);
 		assertEquals(update1.getMonth(), 8);
 		assertEquals(update1.getYear(), 2020);
+		assertEquals(update1.getState(), State.valueOf("KS"));
 	}
 	
 	public void testGetState() {
