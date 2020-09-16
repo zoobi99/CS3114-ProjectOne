@@ -18,10 +18,14 @@ public class CovidParser {
         localIndex = 0;
         // Pulling off each row of data
         while ((row = csvReader.readLine()) != null) {
+        	// Handle case of missing line
+        	if (row.equals(",,,,,,,,,")) {
+        		continue;
+        	}
             String[] data = row.split(",");
             for (int i = 0; i < data.length; i++) {
             	if (data[i].length() == 0) {
-            		data[i] = "0";
+            		data[i] = "-1";
             	}
             }
             CovidUpdate update = new CovidUpdate(Integer.parseInt(data[0]), data[1],
@@ -37,7 +41,8 @@ public class CovidParser {
             for (int i = 0; i < localIndex; i++) {
             	if (masterList[i].getDate() == update.getDate() && 
             			masterList[i].getState().name().equals(update.getState().name())) {
-            		System.out.println("Same!!!");
+            		masterList[i] = this.compareEntries(masterList[i], update);
+            		continue;
             	}
             }
             masterList[localIndex] = update;
@@ -46,6 +51,54 @@ public class CovidParser {
         csvReader.close();
 	}
 	
+	private CovidUpdate compareEntries(CovidUpdate current, CovidUpdate newUpdate) {
+		boolean updateFlag = false;
+		if (newUpdate.getDataQualityScore() > current.getDataQualityScore()) {
+			updateFlag = true;
+		}
+		int date = current.getDate();
+		String state = current.getState().name();
+		// Checking for missing values in current
+		int positiveCases = current.getPositives();
+		if (positiveCases == -1 || updateFlag) {
+			positiveCases = newUpdate.getPositives();
+		}
+		int negativeCases = current.getNegatives();
+		if (negativeCases == -1 || updateFlag) {
+			negativeCases = newUpdate.getNegatives();
+		}
+		int hospitalized = current.getHospitalized();
+		if (hospitalized == -1 || updateFlag) {
+			hospitalized = newUpdate.getHospitalized();
+		}
+		int currOnVent = current.getCurrentOnVent();
+		if (currOnVent == -1 || updateFlag) {
+			currOnVent = newUpdate.getCurrentOnVent();
+		}
+		int cumOnVent = current.getCumulativeOnVent();
+		if (cumOnVent == -1 || updateFlag) {
+			cumOnVent = newUpdate.getCumulativeOnVent();
+		}
+		int recovered = current.getRecovered();
+		if (recovered == -1 || updateFlag) {
+			recovered = newUpdate.getRecovered();
+		}
+		String grade = current.getDataQualityGrade();
+		if (updateFlag) {
+			grade = newUpdate.getDataQualityGrade();
+		}
+		int deaths = current.getDeaths();
+		if (deaths == -1 || updateFlag) {
+			deaths = newUpdate.getDeaths();
+		}
+		// we will keep the old index
+		int updateIndex = current.getIndex();
+		
+		CovidUpdate output = new CovidUpdate(date, state, positiveCases, negativeCases,
+				hospitalized, currOnVent, cumOnVent, recovered, grade, deaths, updateIndex);
+		return output;
+	}
+
 	public CovidUpdate[] getList() {
 		return this.masterList;
 	}

@@ -15,6 +15,7 @@ public class CovidUpdate {
 	private int gradeScore;
 	private int deaths;
 	private int index;
+	private String grade;
 	
 	/**
 	 * Stores one row of data, param tags need to be fixed
@@ -49,6 +50,7 @@ public class CovidUpdate {
 		this.month = tempDate % 100;
 		tempDate /= 100;
 		this.year = tempDate;
+		this.grade = grade;
 	}
 	
 	private int getGradeScore(String grade) {
@@ -162,5 +164,9 @@ public class CovidUpdate {
 	
 	public int getIndex() {
 		return this.index;
+	}
+	
+	public String getDataQualityGrade() {
+		return this.grade;
 	}
 }
