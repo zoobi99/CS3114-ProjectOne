@@ -4,6 +4,7 @@ public class CovidUpdateTest extends TestCase {
 
 	private CovidUpdate update1;
 	
+
 	public void setUp() {
 		update1 = new CovidUpdate(20200818, "KS", 35167, 319095, 2034, 24, 200, 1409,
 				"A+", 405, 0);
