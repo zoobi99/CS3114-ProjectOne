@@ -2,16 +2,25 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CovidParser {
 
-    private CovidUpdate[] masterList;
     private int localIndex;
+    private ArrayList<CovidUpdate> masterList;
 
 
-    public CovidParser(String commandFileName) throws IOException {
-
-        masterList = new CovidUpdate[100];
+    public CovidParser(String commandFileName, ArrayList<CovidUpdate> list)
+        throws IOException {
+        // Accounting for if load has or hasnt been called before
+        if (list == null) {
+            masterList = new ArrayList<CovidUpdate>();
+        }
+        else {
+            masterList = list;
+        }
         File file = new File(commandFileName);
         String row = "";
         BufferedReader csvReader = new BufferedReader(new FileReader(file));
@@ -21,10 +30,12 @@ public class CovidParser {
         while ((row = csvReader.readLine()) != null) {
             // Handle case of missing line
             if (row.equals(",,,,,,,,,")) {
+                System.out.println("Blank line!");
                 continue;
             }
             String[] data = row.split(",");
             for (int i = 0; i < data.length; i++) {
+                // Substitute in -1 for missing data
                 if (data[i].length() == 0) {
                     data[i] = "-1";
                 }
@@ -40,19 +51,35 @@ public class CovidParser {
             if (!update.checkState(data[1], false)) {
                 continue;
             }
+            boolean matchExists = false;
             // Checking if there is currently an update with the same name and
             // date
-            for (int i = 0; i < localIndex; i++) {
-                if (masterList[i].getDate() == update.getDate() && masterList[i]
-                    .getState().name().equals(update.getState().name())) {
-                    masterList[i] = this.compareEntries(masterList[i], update);
-                    continue;
+            for (int i = 0; i < masterList.size(); i++) {
+                if (masterList.get(i).getDate() == update.getDate()
+                    && masterList.get(i).getState().name().equals(update
+                        .getState().name())) {
+                    masterList.set(i, this.compareEntries(masterList.get(i),
+                        update));
+                    matchExists = true;
                 }
             }
-            masterList[localIndex] = update;
+            // If we found a matching record and already updated, we dont want
+            // to add anything
+            if (matchExists) {
+                continue;
+            }
+            masterList.add(update);
             localIndex++;
         }
         csvReader.close();
+        // Sort masterlist after adding new entries
+        Collections.sort(masterList, new Comparator<CovidUpdate>() {
+            @Override
+            public int compare(CovidUpdate o1, CovidUpdate o2) {
+                return Integer.compare(o2.getDate(), o1.getDate());
+            }
+
+        });
     }
 
 
@@ -66,7 +93,7 @@ public class CovidParser {
         }
         int date = current.getDate();
         String state = current.getState().name();
-        // Checking for missing values in current and ensures 
+        // Checking for missing values in current and ensures
         // newUpdate doesn't have missing data
         int positiveCases = current.getPositives();
         int newPositiveCases = newUpdate.getPositives();
@@ -117,7 +144,7 @@ public class CovidParser {
     }
 
 
-    public CovidUpdate[] getList() {
+    public ArrayList<CovidUpdate> getList() {
         return this.masterList;
     }
 
