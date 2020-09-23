@@ -12,10 +12,9 @@ public class CovidParser {
     private ArrayList<CovidUpdate> masterList;
 
 
-    public CovidParser(String commandFileName, ArrayList<CovidUpdate> list)
-        throws IOException {
+    public CovidParser(String commandFileName, ArrayList<CovidUpdate> list) throws IOException {
         // Accounting for if load has or hasnt been called before
-        if (list == null) {
+        if (list==null) {
             masterList = new ArrayList<CovidUpdate>();
         }
         else {
@@ -40,6 +39,11 @@ public class CovidParser {
                     data[i] = "-1";
                 }
             }
+            // Missing state date or data quality grade
+            if (data[1] == "-1" || data[0] == "-1" || data[8] == "-1") {
+                System.out.println("Discard invalid record");
+                continue;
+            }
             CovidUpdate update = new CovidUpdate(Integer.parseInt(data[0]),
                 data[1], (int)Double.parseDouble(data[2]), (int)Double
                     .parseDouble(data[3]), (int)Double.parseDouble(data[4]),
@@ -49,22 +53,20 @@ public class CovidParser {
             // Checking if state is valid, will continue to next iteration if
             // not
             if (!update.checkState(data[1], false)) {
+                localIndex++;
                 continue;
             }
             boolean matchExists = false;
             // Checking if there is currently an update with the same name and
             // date
             for (int i = 0; i < masterList.size(); i++) {
-                if (masterList.get(i).getDate() == update.getDate()
-                    && masterList.get(i).getState().name().equals(update
-                        .getState().name())) {
-                    masterList.set(i, this.compareEntries(masterList.get(i),
-                        update));
+                if (masterList.get(i).getDate() == update.getDate() && masterList.get(i)
+                    .getState().name().equals(update.getState().name())) {
+                    masterList.set(i, this.compareEntries(masterList.get(i), update));
                     matchExists = true;
                 }
             }
-            // If we found a matching record and already updated, we dont want
-            // to add anything
+            // If we found a matching record and already updated, we dont want to add anything
             if (matchExists) {
                 continue;
             }
@@ -87,42 +89,64 @@ public class CovidParser {
         CovidUpdate current,
         CovidUpdate newUpdate) {
         boolean updateFlag = false;
-
+        boolean changeTracker = false;
+        
         if (newUpdate.getDataQualityScore() > current.getDataQualityScore()) {
             updateFlag = true;
+            System.out.println("Data has been updated for " + newUpdate.getState() + 
+                    " " + newUpdate.getDate());
         }
         int date = current.getDate();
         String state = current.getState().name();
-        // Checking for missing values in current and ensures
+        // Checking for missing values in current and ensures 
         // newUpdate doesn't have missing data
         int positiveCases = current.getPositives();
         int newPositiveCases = newUpdate.getPositives();
-        if ((positiveCases == -1 || updateFlag) && newPositiveCases != -1) {
+        // Checking if change made due to missing data
+        if (!updateFlag && positiveCases == -1 && newPositiveCases != -1) {
+            changeTracker = true;
+        }
+        if (positiveCases == -1 || updateFlag) {
             positiveCases = newUpdate.getPositives();
         }
         int negativeCases = current.getNegatives();
         int newNegativeCases = newUpdate.getNegatives();
-        if ((negativeCases == -1 || updateFlag) && newNegativeCases != -1) {
+        if (!updateFlag && negativeCases == -1 && newNegativeCases != -1) {
+            changeTracker = true;
+        }
+        if (negativeCases == -1 || updateFlag) {
             negativeCases = newUpdate.getNegatives();
         }
         int hospitalized = current.getHospitalized();
         int newHospitalized = newUpdate.getHospitalized();
-        if ((hospitalized == -1 || updateFlag) && newHospitalized != -1) {
+        if (!updateFlag && hospitalized == -1 && newHospitalized != -1) {
+            changeTracker = true;
+        }
+        if (hospitalized == -1 || updateFlag) {
             hospitalized = newUpdate.getHospitalized();
         }
         int currOnVent = current.getCurrentOnVent();
         int newOnVentilator = newUpdate.getCurrentOnVent();
-        if ((currOnVent == -1 || updateFlag) && newOnVentilator != -1) {
+        if (!updateFlag && currOnVent == -1 && newOnVentilator != -1) {
+            changeTracker = true;
+        }
+        if (currOnVent == -1 || updateFlag) {
             currOnVent = newUpdate.getCurrentOnVent();
         }
         int cumOnVent = current.getCumulativeOnVent();
         int newCumOnVent = newUpdate.getCumulativeOnVent();
-        if ((cumOnVent == -1 || updateFlag) && newCumOnVent != -1) {
+        if (!updateFlag && cumOnVent == -1 && newCumOnVent != -1) {
+            changeTracker = true;
+        }
+        if (cumOnVent == -1 || updateFlag) {
             cumOnVent = newUpdate.getCumulativeOnVent();
         }
         int currRecovered = current.getRecovered();
         int newRecovered = newUpdate.getRecovered();
-        if ((currRecovered == -1 || updateFlag) && newRecovered != -1) {
+        if (!updateFlag && currRecovered == -1 && newRecovered != -1) {
+            changeTracker = true;
+        }
+        if (currRecovered == -1 || updateFlag) {
             currRecovered = newUpdate.getRecovered();
         }
         String grade = current.getDataQualityGrade();
@@ -131,21 +155,33 @@ public class CovidParser {
         }
         int deaths = current.getDeaths();
         int newDeaths = newUpdate.getDeaths();
-        if ((deaths == -1 || updateFlag) && newDeaths != -1) {
+        if (!updateFlag & deaths == -1 && newDeaths != -1) {
+            changeTracker = true;
+        }
+        if (deaths == -1 || updateFlag) {
             deaths = newUpdate.getDeaths();
         }
         // we will keep the old index
         int updateIndex = current.getIndex();
-
+        
+        if (changeTracker) {
+            System.out.println("Data has been updated for the missing data in " + 
+                    current.getState());
+        }
         CovidUpdate output = new CovidUpdate(date, state, positiveCases,
             negativeCases, hospitalized, currOnVent, cumOnVent, currRecovered,
             grade, deaths, updateIndex);
+        System.out.println("Low quality data rejected for " + output.getState());
         return output;
     }
 
 
     public ArrayList<CovidUpdate> getList() {
         return this.masterList;
+    }
+    
+    public int getMostRecentRecordsAdded() {
+        return localIndex;
     }
 
 }

@@ -63,13 +63,10 @@ public class CovidUpdate {
         this.grade = grade;
     }
 
-
     /**
      * This method returns a integer value
      * based on the input grade.
-     * 
-     * @param grade
-     *            The input grade
+     * @param grade The input grade 
      * @return an integer value
      */
     private int getGradeScore(String grade) {
@@ -117,15 +114,11 @@ public class CovidUpdate {
         }
     }
 
-
     /**
      * This method checks to see if the given state
      * name is valid.
-     * 
-     * @param stateName
-     *            The state that is given as input
-     * @param isConstructor
-     *            boolean check
+     * @param stateName The state that is given as input
+     * @param isConstructor boolean check
      * @return true if it is a state, false if not
      */
     public boolean checkState(String stateName, boolean isConstructor) {
@@ -134,173 +127,142 @@ public class CovidUpdate {
             return true;
         }
         catch (Exception e) {
-            if (isConstructor) {
-                System.out.println("State of " + stateName
-                    + " does not exist!");
+            if (!isConstructor) {
+                System.out.println("State " + stateName + " does not exist");
             }
             return false;
         }
     }
 
-
     /**
      * This is a getter method that returns
      * a value for the data quality score.
-     * 
      * @return grade score
      */
     public int getDataQualityScore() {
         return this.gradeScore;
     }
 
-
     /**
      * This is a getter method that returns
      * the date value.
-     * 
      * @return the date
      */
     public int getDate() {
         return this.date;
     }
 
-
     /**
      * This is a getter method that returns
      * the state value.
-     * 
      * @return the state
      */
     public State getState() {
         return this.state;
     }
 
-
     /**
      * This is a getter method that returns
      * the number of positive cases.
-     * 
      * @return number of positive cases
      */
     public int getPositives() {
         return this.positiveCases;
     }
 
-
     /**
      * This is a getter method that returns
      * the number of negative cases.
-     * 
      * @return number of negative cases
      */
     public int getNegatives() {
         return this.negativeCases;
     }
 
-
     /**
      * This is a getter method that returns
      * the number of people hospitalized.
-     * 
      * @return number of people hospitalized
      */
     public int getHospitalized() {
         return this.hospitalized;
     }
 
-
     /**
      * This is a getter method that returns
      * the number of people on ventilator.
-     * 
      * @return num of people on ventilator
      */
     public int getCurrentOnVent() {
         return this.onVentilatorCurrently;
     }
 
-
     /**
-     * This is a getter method that returns
+     * This is a getter method that returns 
      * the cumulative number on ventilators.
-     * 
      * @return cumulative number on ventilators.
      */
     public int getCumulativeOnVent() {
         return this.onVentilatorCumulative;
     }
 
-
     /**
-     * This is a getter method that returns
+     * This is a getter method that returns 
      * the number of people recovered.
-     * 
      * @return number of people recovered
      */
     public int getRecovered() {
         return this.recovered;
     }
 
-
     /**
      * This is a getter method that returns
      * the number of deaths.
-     * 
      * @return number of deaths
      */
     public int getDeaths() {
         return this.deaths;
     }
 
-
     /**
      * This is a getter method that returns
      * the day value.
-     * 
      * @return the day value
      */
     public int getDay() {
         return this.day;
     }
 
-
     /**
      * This is a getter method that returns
      * the month value.
-     * 
      * @return the month value
      */
     public int getMonth() {
         return this.month;
     }
 
-
     /**
      * This is a getter method that returns
      * the year value.
-     * 
      * @return the year value
      */
     public int getYear() {
         return this.year;
     }
 
-
     /**
      * This is a getter method that returns
      * the value of the index.
-     * 
      * @return value of the index
      */
     public int getIndex() {
         return this.index;
     }
 
-
     /**
-     * This is a getter method that returns
+     * This is a getter method that returns 
      * the data quality grade.
-     * 
      * @return the data quality grade.
      */
     public String getDataQualityGrade() {
