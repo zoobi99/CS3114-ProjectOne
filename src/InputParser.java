@@ -235,6 +235,34 @@ public class InputParser {
         if (stateName.equalsIgnoreCase("Wyoming") || stateName.equalsIgnoreCase("WY")) {
             return State.WY;
         }
+        if (stateName.equalsIgnoreCase("American Samoa") || stateName.equalsIgnoreCase("AS")) {
+            return State.AS;
+        }
+        if (stateName.equalsIgnoreCase("District of Columbia") || stateName.equalsIgnoreCase("DC")) {
+            return State.WY;
+        }
+        if (stateName.equalsIgnoreCase("Federated States of Micronesia") || stateName.equalsIgnoreCase("FM")) {
+            return State.FM;
+        }
+        if (stateName.equalsIgnoreCase("Guam") || stateName.equalsIgnoreCase("GU")) {
+            return State.GU;
+        }
+        if (stateName.equalsIgnoreCase("Marshall Islands") || stateName.equalsIgnoreCase("MH")) {
+            return State.MH;
+        }
+        if (stateName.equalsIgnoreCase("Northern Mariana Islands") || stateName.equalsIgnoreCase("MP")) {
+            return State.MP;
+        }
+        if (stateName.equalsIgnoreCase("Palau") || stateName.equalsIgnoreCase("PW")) {
+            return State.PW;
+        }
+        if (stateName.equalsIgnoreCase("Puerto Rico") || stateName.equalsIgnoreCase("PR")) {
+            return State.PR;
+        }
+        if (stateName.equalsIgnoreCase("Virgin Islands") || stateName.equalsIgnoreCase("VI")) {
+            return State.VI
+                ;
+        }
     
         
         return null;
