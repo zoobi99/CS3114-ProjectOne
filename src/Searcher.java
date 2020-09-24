@@ -114,7 +114,7 @@ public class Searcher {
             System.out.println(instances + " records are printed out for " + date);
             System.out.println("date       positive    negative    hospitalized    onVentilatorCurrrently  onVentilatorCumulative  recovered   dataQualityGrade    death");
             for (int i = 0; i < instances; i++) {
-                String resultDate = String.valueOf(result.get(i).getMonth()) + "/" + String.valueOf(result.get(i).getDay()) + "/" + String.valueOf(result.get(i).getYear());
+                //String resultDate = String.valueOf(result.get(i).getMonth()) + "/" + String.valueOf(result.get(i).getDay()) + "/" + String.valueOf(result.get(i).getYear());
                 System.out.println(date + "  " + list.get(i).getPositives() + "       " + list.get(i).getNegatives()
                     + "      " + list.get(i).getHospitalized() + "            " + list.get(i).getCurrentOnVent()
                     + "                      " + list.get(i).getCumulativeOnVent() + "                     " 

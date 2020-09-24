@@ -28,7 +28,7 @@ public class InputParserTest extends TestCase {
      * parses through the input txt file.
      */
     public void testParser() {
-        // System.out.print(parser);
+        // System.out.print(parser)
         ArrayList<CovidUpdate> list = parser.getMasterList();
         assertNotNull(parser.getMasterList());
   

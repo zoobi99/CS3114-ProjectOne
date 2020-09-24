@@ -97,7 +97,7 @@ public class CovidUpdateTest extends TestCase {
         update1 = new CovidUpdate(20200818, "KS", 35167, 319095, 2024, 24, 2024, 1409,
             "F", 405, 0);
         assertEquals(update1.getDataQualityScore(), 1);
-        update1 = new CovidUpdate(20200818, "KS", 35167, 319095, 2024, 24, 2024, 1409,
+        update1 = new CovidUpdate(20200818, "KS", 32167, 319095, 2024, 24, 2024, 1409,
             "Z", 405, 0);
         assertEquals(update1.getDataQualityScore(), 0);
 	  

@@ -60,7 +60,7 @@ public class InputParser {
         
         //if (splitted.length == 4) {
           //  searchState = this.getStateEnum(splitted[1] + " " + splitted[2]);
-         //   numRecords = Integer.valueOf(splitted[3]);
+         //   numRecords = Integer.valueOf(splitted[3])
          //   Searcher searcher = new Searcher(masterList, searchState, numRecords, splitted[1]);;
         //}
         // Until here ***
