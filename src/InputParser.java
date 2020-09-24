@@ -44,9 +44,12 @@ public class InputParser {
             else {
                 searchState = this.getStateEnum(splitted[1] + " " + splitted[2]);
                 numRecords = Integer.valueOf(splitted[3]);
+                String state = splitted[1] + " " + splitted[2];
+                Searcher searcher = new Searcher(masterList, searchState, numRecords, state);
                 
             }
         }
+        // Added***
         String date = null;
         //State searchState = null;
         //int numRecords = -1;
@@ -60,6 +63,7 @@ public class InputParser {
          //   numRecords = Integer.valueOf(splitted[3]);
          //   Searcher searcher = new Searcher(masterList, searchState, numRecords, splitted[1]);;
         //}
+        // Until here ***
     }
 
     private void loadCommand(String[] splitted) {

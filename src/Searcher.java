@@ -24,13 +24,18 @@ public class Searcher {
         }
         // When at least the number of instances are found
         if (instances >= numRecords) {
-            for (int i = 0; i < numRecords; i++) {
-                if (list.get(i).getState().equals(state)) {
+            int localCounter = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getState().name().equals(state.name())) {
                     CovidUpdate newUpdate = new CovidUpdate(list.get(i).getDate(), list.get(i).getState().name(), 
                             list.get(i).getPositives(), list.get(i).getNegatives(), list.get(i).getHospitalized(),
                             list.get(i).getCurrentOnVent(), list.get(i).getCumulativeOnVent(), list.get(i).getRecovered(),
                             list.get(i).getDataQualityGrade(), list.get(i).getDeaths(), i);
                     result.add(newUpdate);
+                    localCounter++;
+                }
+                if (localCounter == numRecords) {
+                    break;
                 }
             }
         }
@@ -45,10 +50,12 @@ public class Searcher {
                 }
             }
         }
+        
+        instances = Math.min(instances, numRecords);
+        
         if (instances == 0) {
             System.out.println("There are no records for " + originalInput);
         }
-        
         else {
             System.out.println(instances + " records are printed out for the state of "
                     + originalInput);
@@ -56,26 +63,27 @@ public class Searcher {
             for (int i = 0; i < instances; i++) {
                 String date = String.valueOf(result.get(i).getMonth()) + "/" 
             + String.valueOf(result.get(i).getDay()) + "/" + String.valueOf(result.get(i).getYear());
-                System.out.println(date + "  " + list.get(i).getPositives() + "       " + list.get(i).getNegatives()
-                    + "      " + list.get(i).getHospitalized() + "            " + list.get(i).getCurrentOnVent()
-                    + "                      " + list.get(i).getCumulativeOnVent() + "                     " 
-                    + list.get(i).getRecovered() + "        " + list.get(i).getDataQualityGrade() 
-                    + "                  " + list.get(i).getDeaths());
-              
+ 
+            System.out.println(date + "  " + list.get(i).getPositives() + "       " + list.get(i).getNegatives()
+                + "      " + list.get(i).getHospitalized() + "            " + list.get(i).getCurrentOnVent()
+                + "                      " + list.get(i).getCumulativeOnVent() + "                     " 
+                + list.get(i).getRecovered() + "        " + list.get(i).getDataQualityGrade() 
+                + "                  " + list.get(i).getDeaths());
             }
         }
     }
     
     public Searcher(ArrayList<CovidUpdate> list, String date) {
         String [] splitDate = date.split("/");
-        String inputDay = splitDate[0];
-        String inputMonth = splitDate[1];
+        String inputMonth = splitDate[0];
+        String inputDay = splitDate[1];
         String inputYear = splitDate[2];
         
         int day = Integer.parseInt(inputDay);
         int month = Integer.parseInt(inputMonth);
         int year = Integer.parseInt(inputYear);
-      
+        
+       
         this.list = list;
         int instances = 0;
         result = new ArrayList<CovidUpdate>();
@@ -103,11 +111,10 @@ public class Searcher {
         }
 
         else {
-            System.out.println(instances + "records are printed out for " + date);
+            System.out.println(instances + " records are printed out for " + date);
             System.out.println("date       positive    negative    hospitalized    onVentilatorCurrrently  onVentilatorCumulative  recovered   dataQualityGrade    death");
             for (int i = 0; i < instances; i++) {
                 String resultDate = String.valueOf(result.get(i).getMonth()) + "/" + String.valueOf(result.get(i).getDay()) + "/" + String.valueOf(result.get(i).getYear());
-                System.out.println(resultDate);
                 System.out.println(date + "  " + list.get(i).getPositives() + "       " + list.get(i).getNegatives()
                     + "      " + list.get(i).getHospitalized() + "            " + list.get(i).getCurrentOnVent()
                     + "                      " + list.get(i).getCumulativeOnVent() + "                     " 

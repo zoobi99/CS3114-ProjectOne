@@ -20,6 +20,7 @@ public class InputParserTest extends TestCase {
      */
     public void setUp() throws IOException {
         parser = new InputParser("input_1.txt");
+       
     }
 
     /**
@@ -29,6 +30,11 @@ public class InputParserTest extends TestCase {
     public void testParser() {
         // System.out.print(parser);
         ArrayList<CovidUpdate> list = parser.getMasterList();
+        assertNotNull(parser.getMasterList());
+  
     }
+    
+  
+    
 
 }
