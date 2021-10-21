@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+//Parses given input csv file
 public class InputParser {
     
     private ArrayList<CovidUpdate> masterList;

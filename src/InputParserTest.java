@@ -1,7 +1,7 @@
 import student.TestCase;
 import java.io.IOException;
 import java.util.ArrayList;
-
+//tests input parser
 /**
  * 
  * @author zoobi (Zoobi@vt.edu)

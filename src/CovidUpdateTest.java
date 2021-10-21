@@ -1,5 +1,5 @@
 import student.TestCase;
-
+//Tests the different methods in CovidUpdate
 public class CovidUpdateTest extends TestCase {
 
 	private CovidUpdate update1;

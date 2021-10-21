@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+//searcher class to help search for different states data
 
 public class Searcher {
 
