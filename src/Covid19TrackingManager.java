@@ -1,6 +1,6 @@
 import java.io.File;
 import java.lang.IllegalArgumentException;
-
+//main class
 public class Covid19TrackingManager {
 
     private static String input;

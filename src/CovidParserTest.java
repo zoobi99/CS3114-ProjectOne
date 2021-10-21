@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import student.TestCase;
-
+//test class for CovidParser
 public class CovidParserTest extends TestCase {
 
     private CovidParser parser;

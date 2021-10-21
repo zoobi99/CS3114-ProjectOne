@@ -1,4 +1,4 @@
-
+//Defines CovidUpdate object
 public class CovidUpdate {
 
     private int day;

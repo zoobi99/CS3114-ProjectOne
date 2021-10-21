@@ -84,7 +84,7 @@ public class CovidParser {
         });
     }
 
-
+    //compare different CovidUpdate objects
     private CovidUpdate compareEntries(
         CovidUpdate current,
         CovidUpdate newUpdate) {
